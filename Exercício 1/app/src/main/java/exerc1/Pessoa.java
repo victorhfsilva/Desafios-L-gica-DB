@@ -19,7 +19,7 @@ public class Pessoa {
         if (idade >= 0) {
             this.idade = idade;
         } else {
-            throw new ExcecaoParametroInvalido("Idade " + idade + " e menor que zero.");
+            throw new ExcecaoParametroInvalido("Idade " + idade + " eh menor que zero.");
         }
     }
 

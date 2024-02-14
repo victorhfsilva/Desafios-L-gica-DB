@@ -23,9 +23,9 @@ public class App {
             Pessoa pessoa = new Pessoa(nome, idadeInt);
             
             if (pessoa.isMaiorDeIdade()){
-                logger.info("A pessoa de nome " + nome + " e maior de idade.");
+                logger.info("A pessoa de nome " + nome + " eh maior de idade.");
             } else {
-                logger.info("A pessoa de nome " + nome + " nao e maior de idade.");
+                logger.info("A pessoa de nome " + nome + " nao eh maior de idade.");
             }
 
         } catch (NumberFormatException ex) {

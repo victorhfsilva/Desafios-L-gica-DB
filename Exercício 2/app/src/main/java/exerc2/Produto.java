@@ -14,12 +14,17 @@ public class Produto {
 
     public Produto(String name, double preco, int quantidade) throws ExcecaoParametroInvalido {
         this.name = name;
-        this.quantidade = quantidade;
 
         if (preco > 0) {
             this.preco = preco;
         } else {
-            throw new ExcecaoParametroInvalido("Preco " + preco + " Inválido");
+            throw new ExcecaoParametroInvalido("Preco " + preco + " eh menor ou igual a 0");
+        }
+
+        if (quantidade > 0) {
+            this.quantidade = quantidade;
+        } else {
+            throw new ExcecaoParametroInvalido("Quantidade " + quantidade + " eh menor ou igual a1 0");
         }
     }
 
