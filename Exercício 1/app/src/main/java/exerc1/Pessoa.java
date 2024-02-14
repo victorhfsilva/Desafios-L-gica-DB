@@ -13,9 +13,14 @@ public class Pessoa {
         return idade >= 18;
     }
 
-    public Pessoa(String name, int idade) {
+    public Pessoa(String name, int idade) throws ExcecaoParametroInvalido {
         this.name = name;
-        this.idade = idade;
+        
+        if (idade >= 0) {
+            this.idade = idade;
+        } else {
+            throw new ExcecaoParametroInvalido("Idade " + idade + " e menor que zero.");
+        }
     }
 
 }

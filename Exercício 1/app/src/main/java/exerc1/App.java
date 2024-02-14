@@ -1,17 +1,21 @@
 package exerc1;
 
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class App {
+
+    private static final Logger logger = Logger.getLogger(App.class.getName());
 
     public static void main(String[] args) {
         
         Scanner scanner = new Scanner(System.in);
         
-        System.out.println("Insira o nome da Pessoa: ");
+        logger.info("Insira o nome da Pessoa: ");
         String nome = scanner.nextLine();
 
-        System.out.println("Insira a idade da Pessoa: ");
+        logger.info("Insira a idade da Pessoa: ");
         String idade = scanner.nextLine();
 
         try {
@@ -19,13 +23,17 @@ public class App {
             Pessoa pessoa = new Pessoa(nome, idadeInt);
             
             if (pessoa.isMaiorDeIdade()){
-                System.out.println("A pessoa de nome " + nome + " e maior de idade.");
+                logger.info("A pessoa de nome " + nome + " e maior de idade.");
             } else {
-                System.out.println("A pessoa de nome " + nome + " nao e maior de idade.");
+                logger.info("A pessoa de nome " + nome + " nao e maior de idade.");
             }
 
         } catch (NumberFormatException ex) {
-            System.err.println("Idade Inválida");
+            logger.log(Level.SEVERE, "Idade Invalida.", ex);
+        } catch (ExcecaoParametroInvalido ex) {
+            logger.log(Level.SEVERE, "Parametro Invalido: " + ex.getMessage(), ex);
+        }finally {
+            scanner.close();
         }
 
     }

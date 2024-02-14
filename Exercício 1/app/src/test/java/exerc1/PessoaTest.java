@@ -8,13 +8,13 @@ import org.junit.jupiter.api.Test;
 class PessoaTest {
     
     @Test
-    void verificarSePessoaEhMaiorDeIdade() {
+    void verificarSePessoaEhMaiorDeIdade() throws ExcecaoParametroInvalido {
         Pessoa pessoa = new Pessoa("Victor", 18);
         assertTrue(pessoa.isMaiorDeIdade());
     }
 
     @Test
-    void verificarSePessoaEhMenorDeIdade() {
+    void verificarSePessoaEhMenorDeIdade() throws ExcecaoParametroInvalido {
         Pessoa pessoa = new Pessoa("Victor", 17);
         assertFalse(pessoa.isMaiorDeIdade());
     }
