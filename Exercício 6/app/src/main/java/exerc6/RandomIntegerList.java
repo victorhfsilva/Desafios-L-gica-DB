@@ -10,7 +10,13 @@ public class RandomIntegerList {
 
     }
 
-    public static List<Integer> generateRandomList(int size, int maximumValue){
+    public static List<Integer> generateRandomList(int size, int maximumValue) throws InvalidParameterException{
+        if (size <= 0) {
+            throw new InvalidParameterException("Invalid size.");
+        }
+        if (maximumValue <= 0) {
+            throw new InvalidParameterException("Invalid max value.");
+        }
         ArrayList<Integer> list = new ArrayList<>();
         Random random = new Random();
         

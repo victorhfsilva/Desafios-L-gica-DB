@@ -1,6 +1,7 @@
 package exerc6;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
@@ -18,7 +19,7 @@ class RandomIntegerListTest {
         "10, 100",
         "1, 10"
     })
-    void verificaSeTodosNumerosEstaoDentroDoLimite(int size, int maximumValue) {
+    void verifyIfAllValuesAreValid(int size, int maximumValue) throws InvalidParameterException {
         List<Integer> randomList = RandomIntegerList.generateRandomList(size, maximumValue);
         
         randomList.forEach(i -> {
@@ -45,5 +46,19 @@ class RandomIntegerListTest {
         List<Integer> numbers = List.of(3, 7, 2, 9, 5);
         String convertedList = RandomIntegerList.convertListToString(numbers);
         assertEquals("3 7 m2 M9 5", convertedList);
+    }
+
+    @Test
+    void verifyIfInvalidSizeThrowsException() throws InvalidParameterException {
+        assertThrows(InvalidParameterException.class, () -> {
+            RandomIntegerList.generateRandomList(0, 10);
+        });
+    }
+
+    @Test
+    void verifyIfInvalidMaximumValueThrowsException() throws InvalidParameterException {
+        assertThrows(InvalidParameterException.class, () -> {
+            RandomIntegerList.generateRandomList(10, 0);
+        });
     }
 }
