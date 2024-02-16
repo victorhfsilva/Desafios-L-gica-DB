@@ -1,15 +1,14 @@
 package exerc11;
 
-import java.util.List;
 import java.util.Random;
 
-public class RandomIntegerList {
+public class RandomIntArray {
     
-    private RandomIntegerList(){
+    private RandomIntArray(){
 
     }
 
-    public static int[] generateRandomList(int size, int maximumValue) throws InvalidParameterException {
+    public static int[] generateRandomArray(int size, int maximumValue) throws InvalidParameterException {
         if (size <= 0) {
             throw new InvalidParameterException("Invalid size.");
         }
@@ -27,7 +26,7 @@ public class RandomIntegerList {
     }
 
     
-    public static String convertListToString(int[] list){
+    public static String convertArrayToString(int[] list){
         String[] listString = new String[list.length];
         
         for (int i = 0; i < list.length; i++) {

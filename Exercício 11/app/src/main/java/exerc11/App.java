@@ -9,14 +9,14 @@ public class App {
     public static final Logger logger = Logger.getLogger(App.class.getName());
 
     public static void main(String[] args) throws InvalidParameterException {
-        int[] generatedRandomList = RandomIntegerList.generateRandomList(100, 100);
-        String generatedRandomListString = RandomIntegerList.convertListToString(generatedRandomList);
+        int[] generatedRandomList = RandomIntArray.generateRandomArray(100, 100);
+        String generatedRandomListString = RandomIntArray.convertArrayToString(generatedRandomList);
 
-        logger.info("Generated List \n" + generatedRandomListString);
+        logger.info("Generated Array \n" + generatedRandomListString);
 
         int[] sortedList = BubbleSort.sort(generatedRandomList);
-        String sortedListString = RandomIntegerList.convertListToString(sortedList);
+        String sortedListString = RandomIntArray.convertArrayToString(sortedList);
 
-        logger.info("Sorted List \n" + sortedListString);
+        logger.info("Sorted Array \n" + sortedListString);
     }
 }
