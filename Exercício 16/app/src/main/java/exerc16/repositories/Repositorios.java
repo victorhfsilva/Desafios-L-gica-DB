@@ -3,13 +3,25 @@ package exerc16.repositories;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import java.util.Objects;
 
-@Getter
-@Setter
-@AllArgsConstructor
 public class Repositorios {
     
-    public PessoasRepositorio pessoasRepositorio;
+    private PessoasRepositorio pessoasRepositorio;
 
-    public EmprestimosRepositorio emprestimosRepositorio;
+    private EmprestimosRepositorio emprestimosRepositorio;
+
+    public Repositorios(PessoasRepositorio pessoasRepositorio, EmprestimosRepositorio emprestimosRepositorio) {
+        this.pessoasRepositorio = pessoasRepositorio;
+        this.emprestimosRepositorio = emprestimosRepositorio;
+    }
+
+    public PessoasRepositorio getPessoasRepositorio() {
+        return this.pessoasRepositorio;
+    }
+
+    public EmprestimosRepositorio getEmprestimosRepositorio() {
+        return this.emprestimosRepositorio;
+    }
+    
 }

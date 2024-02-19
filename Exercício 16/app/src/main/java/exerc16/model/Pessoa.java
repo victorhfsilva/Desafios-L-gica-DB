@@ -26,21 +26,19 @@ public class Pessoa {
     }
 
     public void removerLivro(Livro livro){
-        if (livro.getDono().equals(this)){
             livros.remove(livro);
-        }
     }
 
     public void emprestarLivro(Livro livro, Pessoa pessoa, Repositorios repositorios){
         if (livros.contains(livro) &&
             livro.getDono().equals(this) &&
-            repositorios.pessoasRepositorio.contains(pessoa)
+            repositorios.getPessoasRepositorio().contains(pessoa)
         ){
             try {
                 this.removerLivro(livro);
                 pessoa.adicionarLivro(livro);
                 Emprestimo emprestimo = new Emprestimo(livro, pessoa, LocalDateTime.now());
-                repositorios.emprestimosRepositorio.adicionar(emprestimo);
+                repositorios.getEmprestimosRepositorio().adicionar(emprestimo);
                 logger.info("O livro foi emprestado com sucesso.");
             } catch (EmprestimoInvalido ex) {
                 logger.log(Level.SEVERE, "O dono do livro não pode emprestar um livro para si mesmo.", ex);
@@ -56,13 +54,13 @@ public class Pessoa {
 
         if (livros.contains(livro) && 
             !livro.getDono().equals(this) &&
-            repositorios.pessoasRepositorio.contains(dono)
+            repositorios.getPessoasRepositorio().contains(dono)
         ){
             try {
                 this.removerLivro(livro);
                 dono.adicionarLivro(livro);
-                Emprestimo emprestimo = repositorios.emprestimosRepositorio.getEmprestimo(livro);
-                repositorios.emprestimosRepositorio.remover(emprestimo);
+                Emprestimo emprestimo = repositorios.getEmprestimosRepositorio().getEmprestimo(livro);
+                repositorios.getEmprestimosRepositorio().remover(emprestimo);
                 logger.info("O livro foi devolvido com sucesso.");
             } catch(EntidadeNaoEncontrada ex) {
                 logger.log(Level.WARNING, "Não foi possível devolver o livro.", ex);
