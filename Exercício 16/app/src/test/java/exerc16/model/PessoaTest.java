@@ -43,20 +43,20 @@ class PessoaTest {
     }
 
     @Test
-    void adicionarLivro_DeveAdicionarLivro() {
+    void adicionarLivroTest() {
         pessoa.adicionarLivro(livro);
         assertTrue(pessoa.getLivros().contains(livro));
     }
 
     @Test
-    void removerLivro_DeveRemoverLivro() {
+    void removerLivroTest() {
         pessoa.adicionarLivro(livro);
         pessoa.removerLivro(livro);
         assertFalse(pessoa.getLivros().contains(livro));
     }
 
     @Test
-    void emprestarLivro_DeveEmprestarLivro() {
+    void emprestarLivroTest() {
         Pessoa outraPessoa = new Pessoa("Outro Nome", new ArrayList<>());
 
         when(repositorios.getPessoasRepositorio()).thenReturn(pessoasRepositorio);
@@ -70,7 +70,7 @@ class PessoaTest {
     }
 
     @Test
-    void devolverLivro_DeveDevolverLivro() throws EmprestimoInvalido, EntidadeNaoEncontrada {
+    void devolverLivroTest() throws EmprestimoInvalido, EntidadeNaoEncontrada {
         Pessoa outraPessoa = new Pessoa("Outro Nome", new ArrayList<>());
         Emprestimo emprestimo = new Emprestimo(livro, outraPessoa, LocalDateTime.now());
 
