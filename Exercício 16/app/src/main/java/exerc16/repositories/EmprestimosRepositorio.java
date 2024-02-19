@@ -17,7 +17,7 @@ public class EmprestimosRepositorio {
     }
 
     public void editar(int index, Emprestimo emprestimo){
-        emprestimos.add(index, emprestimo);
+        emprestimos.set(index, emprestimo);
     }
 
     public void remover(Emprestimo emprestimo){

@@ -14,7 +14,7 @@ public class PessoasRepositorio {
     }
 
     public void editar(int index, Pessoa pessoa){
-        pessoas.add(index, pessoa);
+        pessoas.set(index, pessoa);
     }
 
     public void remover(Pessoa pessoa){

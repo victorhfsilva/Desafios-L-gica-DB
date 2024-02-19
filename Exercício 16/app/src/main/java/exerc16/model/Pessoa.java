@@ -4,19 +4,14 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.ArrayList;
 
+import exerc16.exceptions.EmprestimoInvalido;
 import exerc16.exceptions.EntidadeNaoEncontrada;
-import exerc16.repositories.PessoasRepositorio;
 import exerc16.repositories.Repositorios;
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
-@Getter
-@Setter
-@AllArgsConstructor
 @ToString(exclude = "livros")
 @EqualsAndHashCode(exclude = "livros")
 public class Pessoa {
@@ -41,11 +36,16 @@ public class Pessoa {
             livro.getDono().equals(this) &&
             repositorios.pessoasRepositorio.contains(pessoa)
         ){
-            this.removerLivro(livro);
-            pessoa.adicionarLivro(livro);
-            Emprestimo emprestimo = new Emprestimo(livro, pessoa, LocalDateTime.now());
-            repositorios.emprestimosRepositorio.adicionar(emprestimo);
-            logger.info("O livro foi emprestado com sucesso.");
+            try {
+                this.removerLivro(livro);
+                pessoa.adicionarLivro(livro);
+                Emprestimo emprestimo = new Emprestimo(livro, pessoa, LocalDateTime.now());
+                repositorios.emprestimosRepositorio.adicionar(emprestimo);
+                logger.info("O livro foi emprestado com sucesso.");
+            } catch (EmprestimoInvalido ex) {
+                logger.log(Level.SEVERE, "O dono do livro não pode emprestar um livro para si mesmo.", ex);
+            }
+
         } else {
             logger.warning("Não foi possível emprestar o livro.");
         }
@@ -69,4 +69,26 @@ public class Pessoa {
             }
         }
     }
+
+    public Pessoa(String nome, List<Livro> livros) {
+        this.nome = nome;
+        this.livros = new ArrayList<>(livros);
+    }
+
+    public String getNome() {
+        return this.nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public List<Livro> getLivros() {
+        return this.livros;
+    }
+
+    public void setLivros(List<Livro> livros) {
+        this.livros = livros;
+    }
+
 }
