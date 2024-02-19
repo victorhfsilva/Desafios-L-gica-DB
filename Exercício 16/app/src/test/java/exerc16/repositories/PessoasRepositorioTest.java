@@ -8,6 +8,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import exerc16.exceptions.EntidadeNaoEncontrada;
 import exerc16.model.Pessoa;
 
 class PessoasRepositorioTest {
@@ -38,7 +40,7 @@ class PessoasRepositorioTest {
     }
 
     @Test
-    void testRemover() {
+    void testRemover() throws EntidadeNaoEncontrada {
         repositorio.adicionar(pessoa1);
         repositorio.remover(pessoa1);
         assertFalse(repositorio.contains(pessoa1));

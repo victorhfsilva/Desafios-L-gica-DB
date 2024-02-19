@@ -56,7 +56,7 @@ class EmprestimosRepositorioTest {
     }
 
     @Test
-    void testRemover() throws EmprestimoInvalido {
+    void testRemover() throws EmprestimoInvalido, EntidadeNaoEncontrada {
         Emprestimo emprestimo = new Emprestimo(livro2, pessoa1, LocalDateTime.now());
         repositorio.adicionar(emprestimo);
         repositorio.remover(emprestimo);

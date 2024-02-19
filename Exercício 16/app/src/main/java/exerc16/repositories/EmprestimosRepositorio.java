@@ -20,8 +20,12 @@ public class EmprestimosRepositorio {
         emprestimos.set(index, emprestimo);
     }
 
-    public void remover(Emprestimo emprestimo){
-        emprestimos.remove(emprestimo);
+    public void remover(Emprestimo emprestimo) throws EntidadeNaoEncontrada{
+        if (emprestimos.contains(emprestimo)) {
+            emprestimos.remove(emprestimo);
+        } else {
+            throw new EntidadeNaoEncontrada("O Empréstimo não foi encontrada no repositório");
+        }
     }
 
     public int getIndex(Emprestimo emprestimo){

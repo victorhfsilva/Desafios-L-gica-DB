@@ -3,6 +3,7 @@ package exerc16.repositories;
 import java.util.ArrayList;
 import java.util.List;
 
+import exerc16.exceptions.EntidadeNaoEncontrada;
 import exerc16.model.Pessoa;
 
 public class PessoasRepositorio {
@@ -17,8 +18,13 @@ public class PessoasRepositorio {
         pessoas.set(index, pessoa);
     }
 
-    public void remover(Pessoa pessoa){
-        pessoas.remove(pessoa);
+    public void remover(Pessoa pessoa) throws EntidadeNaoEncontrada{
+        if (pessoas.contains(pessoa)) {
+            pessoas.remove(pessoa);
+        } else {
+            throw new EntidadeNaoEncontrada("Pessoa não foi encontrada no repositório");
+        }
+        
     }
 
     public int getIndex(Pessoa pessoa){
