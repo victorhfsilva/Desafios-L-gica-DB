@@ -1,9 +1,13 @@
 package exerc20;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -66,6 +70,56 @@ public class Pedido {
             logger.log(Level.SEVERE, "Este produto não existe no estoque.", ex);
         }
     }
+
+    public double calcularTroco(double valorRecebido){
+        if (valorRecebido >= valorTotalDoPedido){
+            return valorRecebido - valorTotalDoPedido;
+        }
+        throw new IllegalArgumentException("O valor recebido deve ser maior ou igual ao valor do pedido.");
+    }
+
+    public List<Map<Integer,Integer>> calcularNumeroMinimoDeCedulas(double valorRecebido){
+        Map<Integer, Integer> mapaDeNotas = new LinkedHashMap<>();
+        mapaDeNotas.put(200, 0);
+        mapaDeNotas.put(100, 0);
+        mapaDeNotas.put(50, 0);
+        mapaDeNotas.put(20, 0);
+        mapaDeNotas.put(10, 0);
+        mapaDeNotas.put(5, 0);
+        mapaDeNotas.put(2, 0);
+
+        Map<Integer, Integer> mapaDeMoedas = new LinkedHashMap<>();
+        mapaDeMoedas.put(100, 0);
+        mapaDeMoedas.put(50, 0);
+        mapaDeMoedas.put(25, 0);
+        mapaDeMoedas.put(10, 0);
+        mapaDeMoedas.put(5, 0);
+        mapaDeMoedas.put(1, 0);
+                
+        double troco = calcularTroco(valorRecebido);
+
+        int trocoInt = (int) Math.floor(troco);
+        double restoCentavos = (troco - trocoInt)*100;
+        int centavos = (int) Math.ceil(restoCentavos);
+        
+        calcularCedulas(mapaDeNotas, trocoInt);
+        calcularCedulas(mapaDeMoedas, centavos);
+
+        return List.of(mapaDeNotas, mapaDeMoedas);
+    }
+
+    private void calcularCedulas(Map<Integer, Integer> mapaDeCedulas, int troco) {
+        for (Map.Entry<Integer, Integer> entry : mapaDeCedulas.entrySet()) {
+            int chave = entry.getKey();
+            int valor = entry.getValue();
+            if (troco / chave > 0) {
+                valor = troco / chave;
+                troco = troco % chave;
+            }
+            mapaDeCedulas.put(chave, valor);
+        }
+    }
+
 
     public void limparCarrinho() {
         listaDeItens.clear();

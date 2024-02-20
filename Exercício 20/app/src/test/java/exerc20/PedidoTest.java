@@ -1,6 +1,7 @@
 package exerc20;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -9,6 +10,8 @@ import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -125,4 +128,41 @@ class PedidoTest {
         assertTrue(pedido.getListaDeItens().isEmpty());
         assertEquals(5, Estoque.getQuantidadeAtualEmEstoque(produto));
     }
+
+
+    @Test
+    void testCalcularTroco() {
+        pedido.setValorTotalDoPedido(50.0);
+        assertEquals(20.0, pedido.calcularTroco(70.0));
+    }
+
+    @Test
+    void testCalcularTrocoValorInsuficiente() {
+        pedido.setValorTotalDoPedido(50.0);
+        assertThrows(IllegalArgumentException.class, () -> {
+            pedido.calcularTroco(40.0);
+        });
+    }
+
+    @Test
+    void testCalcularNumeroMinimoDeCedulas() {
+        pedido.setValorTotalDoPedido(94.48);
+        List<Map<Integer,Integer>> cedulas = pedido.calcularNumeroMinimoDeCedulas(200.0);
+        assertEquals(2, cedulas.size());
+        Map<Integer,Integer> notas = cedulas.get(0);
+        Map<Integer,Integer> moedas = cedulas.get(1);
+        assertEquals(1, notas.get(100));
+        assertEquals(1, notas.get(5));
+        assertEquals(1, moedas.get(50));
+        assertEquals(2, moedas.get(1));
+    }
+
+    @Test
+    void testCalcularNumeroMinimoDeCedulasValorInsuficiente() {
+        pedido.setValorTotalDoPedido(100.0);
+        assertThrows(IllegalArgumentException.class, () -> {
+            pedido.calcularNumeroMinimoDeCedulas(50.0);
+        });
+    }
+
 }
