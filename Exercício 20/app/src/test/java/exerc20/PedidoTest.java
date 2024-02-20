@@ -102,6 +102,7 @@ class PedidoTest {
 
         assertEquals(1, pedido.getListaDeItens().size());
         assertEquals(5, pedido.getListaDeItens().get(0).getQuantidade());
+        assertEquals(0, Estoque.getQuantidadeAtualEmEstoque(produto));
     }
 
     @Test
@@ -122,5 +123,6 @@ class PedidoTest {
 
         verify(logger).log(eq(Level.SEVERE), eq("Não há estoque suficiente deste produto."));
         assertTrue(pedido.getListaDeItens().isEmpty());
+        assertEquals(5, Estoque.getQuantidadeAtualEmEstoque(produto));
     }
 }

@@ -58,6 +58,7 @@ public class Pedido {
             Produto produto = Estoque.encontraProduto(nome);
             if (Estoque.temEstoqueOuNao(produto, quantidade)) {
                 adicionaItemNaLista(produto, quantidade);
+                Estoque.darBaixaEmEstoque(nome, quantidade);
             } else {
                 logger.log(Level.SEVERE, "Não há estoque suficiente deste produto.");
             }
