@@ -2,12 +2,16 @@ package exerc20;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.NoSuchElementException;
 import java.util.Scanner;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -33,8 +37,9 @@ class PedidoTest {
 
     @BeforeEach
     void setUp() {
+        Estoque.inicializaEstoque();
         pedido.getListaDeItens().clear();
-        produto = new Produto(1, "Produto A", 10.0, 5);
+        produto = new Produto(1, "Produto", 10.0, 5);
     }
 
     @Test
@@ -86,5 +91,36 @@ class PedidoTest {
         int produtoId = pedido.recebeQuantidadeDoTeclado();
         verify(logger).info("Insira a quantidade do produto.");
         assertEquals(5, produtoId);
+    }
+
+    @Test
+    void testAdicionaItem() {
+        when(scanner.nextLine()).thenReturn("Produto", "5");
+        assertTrue(Estoque.cadastraProduto(produto));
+
+        pedido.adicionaItem();
+
+        assertEquals(1, pedido.getListaDeItens().size());
+        assertEquals(5, pedido.getListaDeItens().get(0).getQuantidade());
+    }
+
+    @Test
+    void testAdicionaItemProdutoNaoExistente() {
+        when(scanner.nextLine()).thenReturn("Produto Inexistente", "3");
+        pedido.adicionaItem();
+
+        verify(logger).log(eq(Level.SEVERE), eq("Este produto não existe no estoque."), any(NoSuchElementException.class));
+        assertTrue(pedido.getListaDeItens().isEmpty());
+    }
+
+    @Test
+    void testAdicionaItemQuantidadeMaiorQueEstoque() {
+        when(scanner.nextLine()).thenReturn("Produto", "10");
+        assertTrue(Estoque.cadastraProduto(produto));
+
+        pedido.adicionaItem();
+
+        verify(logger).log(eq(Level.SEVERE), eq("Não há estoque suficiente deste produto."));
+        assertTrue(pedido.getListaDeItens().isEmpty());
     }
 }

@@ -2,7 +2,9 @@ package exerc20;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Pedido {
@@ -50,7 +52,18 @@ public class Pedido {
     }
 
     public void adicionaItem() {
-
+        String nome = recebeNomeDoTeclado();
+        int quantidade = recebeQuantidadeDoTeclado();
+        try {
+            Produto produto = Estoque.encontraProduto(nome);
+            if (Estoque.temEstoqueOuNao(produto, quantidade)) {
+                adicionaItemNaLista(produto, quantidade);
+            } else {
+                logger.log(Level.SEVERE, "Não há estoque suficiente deste produto.");
+            }
+        } catch (NoSuchElementException ex){
+            logger.log(Level.SEVERE, "Este produto não existe no estoque.", ex);
+        }
     }
 
     public void limparCarrinho() {
