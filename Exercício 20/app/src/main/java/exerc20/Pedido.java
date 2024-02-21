@@ -44,14 +44,12 @@ public class Pedido {
     public String recebeNomeDoTeclado() {
         logger.info("Insira um produto.");
         String nomeDoProduto = scanner.nextLine();
-        scanner.close();
         return nomeDoProduto;
     }
 
     public int recebeQuantidadeDoTeclado() {
         logger.info("Insira a quantidade do produto.");
         String quantidadeDoProduto = scanner.nextLine();
-        scanner.close();
         return Integer.parseInt(quantidadeDoProduto);
     }
 
