@@ -1,17 +1,17 @@
 package exerc20;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.io.Closeable;
+import java.io.IOException;
 
-public class Pedido {
+public class Pedido implements Closeable {
     
     private List<Item> listaDeItens = new ArrayList<>();
     private double valorTotalDoPedido = 0;
@@ -140,4 +140,8 @@ public class Pedido {
         this.valorTotalDoPedido = valorTotalDoPedido;
     }
 
+    @Override
+    public void close() throws IOException {
+        scanner.close();
+    }
 }
